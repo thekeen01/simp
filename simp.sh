@@ -57,6 +57,14 @@ echo "======== listening on ports"
 echo ""
 netstat -na | grep -i listen | grep -v unix
 echo ""
+echo "======== ARP Cache"
+echo ""
+arp -a 
+echo ""
+echo "======== Routes"
+echo ""
+ip r
+echo ""
 echo "======== current user groups"
 echo ""
 id

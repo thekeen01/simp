@@ -37,6 +37,10 @@ echo "======== linux version"
 echo ""
 lsb_release -a
 echo ""
+echo "======== Users with shells"
+echo ""
+getent passwd | awk -F: 'BEGIN{while(getline s<"/etc/shells") shells[s]=1} ($7 in shells){print $1 ":" $7}'
+echo ""
 echo "======== list passwd file"
 echo ""
 cat /etc/passwd
@@ -44,6 +48,10 @@ echo ""
 echo "======== running processes"
 echo ""
 ps -ef
+echo ""
+echo "======== Environment"
+echo ""
+env
 echo ""
 echo "======== listening on ports"
 echo ""
@@ -79,7 +87,9 @@ echo "----- check files or directories readable by the user's group"
 echo ""
 find / -perm -g=r -not -perm -o=r 2>/dev/null | grep -v /proc | grep -v /sys | grep -v /dev
 echo ""
+echo "----- check writeable files or directories by the current user"
+find / -path /proc -prune -o -type f -perm -o+w 2>/dev/null
+echo ""
 echo "======== check cronjobs"
 echo ""
 cat /etc/crontab
-

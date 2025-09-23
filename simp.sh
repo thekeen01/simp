@@ -79,13 +79,13 @@ echo ""
 sudo -V
 echo ""
 echo "======== check suid, sgid programs and ACLs on files"
-echo "----- suid programs"
+echo "----- non default / uncommon suid programs"
 echo ""
-find / -perm /4000 2>/dev/null
+find / -perm /4000 -type f 2>/dev/null | grep -Ev '^(/usr/sbin/uuidd|/usr/sbin/pppd|/usr/bin/arping|/usr/bin/expiry|/usr/bin/chfn|/usr/bin/sudo|/usr/bin/chage|/usr/bin/gpasswd|/usr/bin/dotlockfile|/usr/bin/newgrp|/usr/bin/mlocate|/usr/bin/mail-unlock|/usr/bin/chsh|/usr/bin/bsd-write|/usr/bin/mail-touchlock|/usr/bin/crontab|/usr/bin/passwd|/usr/bin/traceroute6.iputils|/usr/bin/mail-lock|/usr/bin/wall|/usr/bin/mtr|/usr/bin/sudoedit|/usr/bin/lppasswd|/usr/bin/X|/usr/bin/pkexec|/usr/bin/at|/usr/bin/ssh-agent|/usr/lib/pt_chown|/usr/bin/su|/usr/bin/mount|/usr/bin/umount)$'
 echo ""
-echo "----- sgid programs"
+echo "----- non default / uncommon sgid programs"
 echo ""
-find / -perm /2000 2>/dev/null
+find / -perm /2000 -type f 2>/dev/null | grep -Ev '^(/usr/sbin/uuidd|/usr/sbin/pppd|/usr/bin/arping|/usr/bin/expiry|/usr/bin/chfn|/usr/bin/sudo|/usr/bin/chage|/usr/bin/gpasswd|/usr/bin/dotlockfile|/usr/bin/newgrp|/usr/bin/mlocate|/usr/bin/mail-unlock|/usr/bin/chsh|/usr/bin/bsd-write|/usr/bin/mail-touchlock|/usr/bin/crontab|/usr/bin/passwd|/usr/bin/traceroute6.iputils|/usr/bin/mail-lock|/usr/bin/wall|/usr/bin/mtr|/usr/bin/sudoedit|/usr/bin/lppasswd|/usr/bin/X|/usr/bin/pkexec|/usr/bin/at|/usr/bin/ssh-agent|/usr/lib/pt_chown|/usr/bin/su|/usr/bin/mount|/usr/bin/umount)$'
 echo ""
 echo "----- check files with ACLs"
 echo ""
@@ -100,4 +100,4 @@ find / -path /proc -prune -o -type f -perm -o+w 2>/dev/null
 echo ""
 echo "======== check cronjobs"
 echo ""
-cat /etc/crontab
+grep -v "^#" /etc/crontab
